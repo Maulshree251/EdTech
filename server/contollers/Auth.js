@@ -1,5 +1,4 @@
 //send otp
-const User = require('../models/User');
 const OTP = require('../models/OTP');
 const User = require('../models/User');
 const Profiler = require('../models/Profile');
@@ -105,7 +104,7 @@ exports.signup = async (req, res) => {
             })
         }
 
-        else if(recentOTP !== otp){
+        else if(recentOTP.otp !== otp){
             return res.json({
                 success: false,
                 message: "Invalid OTP"
@@ -126,13 +125,18 @@ exports.signup = async (req, res) => {
             lastName,
             email,
             password: hashedPassword,
-            //accountType,
+            accountType,
             contactNumber,
             additionalDetails: profileDetails._id,
             image: `https://api.dicebear.com/9.x/adventurer/svg?seed=${firstName}${lastName}`
         }
 
-        const user = await User.create(userPayload);
+        const user = (await User.create(userPayload)).populate("additionalDetails");
+
+        return res.status(200).json({
+            success: true,
+            message: "account created successfully"
+        })
     } catch(err){
         console.log(err);
         return res.status(500).json({
@@ -154,7 +158,7 @@ exports.signup = async (req, res) => {
                     message: "All fields are required"
                 })
             }
-            const user = await User.findOne({email});
+            const user = await User.findOne({email}).populate("additionalDetails");
             if(!user){
                 return res.status(404).json({
                     success: false,
@@ -163,6 +167,7 @@ exports.signup = async (req, res) => {
             }
             //generate jwt token after password matching
             if(await bcrypt.compare(password, user.password)){
+
                 const payload = {
                     email: user.email,
                     id: user._id,

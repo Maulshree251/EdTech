@@ -14,6 +14,9 @@ const SubSectionSchema = new mongoose.Schema({
     },
     description: {
         type: String,
+    },
+    sectionId: {
+        type: mongoose.Schema.Types.ObjectId
     }
 });
 

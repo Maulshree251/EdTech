@@ -53,8 +53,9 @@ exports.updateSubsection = async (req, res) => {
         //fetch data from req body
         const {title, timeDuration, description} = req.body;
         const videoFile = req.files.videoFile;
+        console.log(videoFile);
         //fetch subsection id from req params
-        const {subsectionId} = req.params;
+        const {subsectionId} = req.body;
         //validate
         if(!title && !timeDuration && !description && !videoFile){
             return res.status(400).json({
@@ -71,6 +72,7 @@ exports.updateSubsection = async (req, res) => {
             description: description,
             videoURL: updatedVideo.secure_url 
         }, {new: true})
+        
         //send response
         return res.status(200).json({
             success: true,

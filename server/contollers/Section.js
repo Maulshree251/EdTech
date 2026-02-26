@@ -14,12 +14,27 @@ exports.createSection = async (req, res) => {
                 message: "Section name and course ID are required"
             })
         }
+
+        //check if course exists in db
+        const course = await Course.findById(courseId)
+        if(!course) {
+            return res.status(400).json({
+                success: false,
+                message: "Course does not exist"
+            })
+        }
         //create section
-        const newSection = await Section.create({sectionName});
+        const newSection = await Section.create({sectionName: sectionName, courseId:courseId});
         //update course with section
         const updatedCourse = await Course.findByIdAndUpdate(courseId, {
             $push: {courseContent: newSection._id}
         }, {new: true}).populate("courseContent").exec();
+        if(!updatedCourse) {
+            return res.json({
+                success: false,
+                message: "Course content not added to course"
+            })
+        }
 
         return res.status(200).json({
             success: true,
@@ -39,7 +54,7 @@ exports.createSection = async (req, res) => {
 //update section
 exports.updateSection = async (req, res) => {
     try{
-        const {sectionId} = req.params;
+        const {sectionId} = req.body;
         const {sectionName} = req.body;
         if(!sectionName){
             return res.status(400).json({
@@ -70,7 +85,7 @@ exports.updateSection = async (req, res) => {
 //delete section
 exports.deleteSection = async (req, res) => {
     try{
-        const {sectionId} = req.params;
+        const {sectionId} = req.body;
 
         await Section.findByIdAndDelete(sectionId);
         await Course.deleteOne({courseContent: sectionId});
@@ -79,6 +94,10 @@ exports.deleteSection = async (req, res) => {
             message: "Section deleted successfully"
         });   
     } catch(err){
-
+        return res.statur(500).json({
+            success: false,
+            message: "Error deleting section",
+            error: err.message
+        })
     }
 }

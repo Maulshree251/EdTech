@@ -6,6 +6,7 @@ const User = require('../models/User');
 
 exports.auth = async (req, res, next) => {
     try{
+        console.log("auth middleware hit");
         //extract token from cookies
         const token = req.cookies.token || req.body.token || req.header("Authorisation").replace("Bearer ", "");
 
@@ -26,13 +27,15 @@ exports.auth = async (req, res, next) => {
                 message: "Invalid token"
             });
         }
-        next();
+        console.log("token verfied")
+
     } catch(err){
         return res.status(500).json({
             success: false,
             message: "Error verifying token"
         });
     }
+    next();
 };
 
 //isStudent

@@ -18,7 +18,6 @@ exports.createTag = async(req, res) =>{
             message: "Tag created successfully",
             data: tagDetails
         })
-        console.log("Tag created successfully: ", tagDetails);
     } catch(err){
         console.log(err);
         return res.status(500).json({

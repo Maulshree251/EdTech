@@ -14,6 +14,10 @@ const ratingAndReviewSchema = new mongoose.Schema({
     review: {
         type: String,
         trim: true
+    },
+    course: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Course"
     }
 });
 
