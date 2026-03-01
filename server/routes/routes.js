@@ -27,7 +27,7 @@ const {
 const {
     createCategory,
     showAllCategories,
-    getCategoryDetails
+    getCategoryPageDetails
 } = require('../contollers/CategoryController');
 
 const {
@@ -90,7 +90,7 @@ router.put('/profile/updateDisplayPicture', auth, updateProfilePicture);
 // ==================== CATEGORY/TAG ROUTES ====================
 router.post('/course/createCategory', auth, isAdmin, createCategory);
 router.get('/course/showAllCategories', showAllCategories);
-router.get('/course/getCategoryPageDetails/:categoryId', getCategoryDetails);
+router.get('/course/getCategoryPageDetails/:categoryId', getCategoryPageDetails);
 
 router.post('/course/createTag', auth, isAdmin, createTag);
 router.get('/course/getAllTags', getAllTags);
@@ -111,12 +111,12 @@ router.delete('/course/deleteSection', auth, isInstructor, deleteSection);
 // ==================== SUBSECTION ROUTES ====================
 router.post('/course/addSubSection', auth, isInstructor, createSubsection);
 router.put('/course/updateSubSection', auth, isInstructor, updateSubsection);
-router.delete('/course/deleteSubSection/:subsectionId', auth, isInstructor, deleteSubsection);
+router.delete('/course/deleteSubSection', auth, isInstructor, deleteSubsection);
 
 // ==================== RATING & REVIEW ROUTES ====================
-router.post('/rating/createRating', auth, isStudent, createRating);
-router.get('/rating/:courseId/getAverageRating', getaverageRating);
-router.get('/rating/getReviews', getAllRating);
+router.post('/course/createRating', auth, isStudent, createRating);
+router.get('/course/getAverageRating', getaverageRating);
+router.get('/course/getReviews', getAllRating);
 
 // ==================== PAYMENT ROUTES ====================
 router.post('/payment/capturePayment', auth, isStudent, capturePayment);

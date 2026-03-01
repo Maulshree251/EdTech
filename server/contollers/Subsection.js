@@ -92,15 +92,29 @@ exports.updateSubsection = async (req, res) => {
 exports.deleteSubsection = async (req, res) => {
     try{
         //fetch subsection id from req params
-        const {subsectionId} = req.params;
+        const {subSectionId, sectionId} = req.body;
+        
+        //remove subsection id from section
+        try{
+            await Section.findByIdAndUpdate(sectionId,
+                {$pull: {subSections: subSectionId}},
+                {new: true}
+            )
+        } catch(err){
+            return res.status(500).json({
+                success: true,
+                message: "subsection id not removed from section"
+            })
+        }
         //delete subsection entry from db
-        const deletedSubsection = await Subsection.findByIdAndDelete(subsectionId);
+        const deletedSubsection = await Subsection.findByIdAndDelete(subSectionId);
         if(!deletedSubsection){
             return res.status(404).json({
                 success: false,
                 message: "Subsection not found"
             });
         }
+        
         //send response
         return res.status(200).json({
             success: true,

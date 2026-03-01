@@ -47,6 +47,8 @@ exports.isStudent = async (req, res, next) => {
                 message: "Access denied. Only students are allowed to access this resource"
             });
         }
+        console.log("student auth successful");
+        next();
     } catch(err){
         return res.status(500).json({
             success: false,

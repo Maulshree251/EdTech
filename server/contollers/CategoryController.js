@@ -70,7 +70,7 @@ exports.showAllCategories = async (req, res) => {
 
 //getCategoryDetails
 
-exports.getCategoryDetails = async (req, res) => {
+exports.getCategoryPageDetails = async (req, res) => {
     try {
         // Get category id from URL parameters
         const { categoryId } = req.params;
@@ -117,3 +117,4 @@ exports.getCategoryDetails = async (req, res) => {
         });
     }
 };
+
