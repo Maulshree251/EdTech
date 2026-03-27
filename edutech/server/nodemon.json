@@ -1,0 +1,6 @@
+{
+  "watch": [".", "../.env"],
+  "ignore": ["node_modules", ".git"],
+  "delay": 1000,
+  "quiet": false
+}

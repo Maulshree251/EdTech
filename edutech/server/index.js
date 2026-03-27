@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
-require('dotenv').config();
+require('dotenv').config({ silent: true });
 
 const { connectDB } = require('./config/database');
 const { cloudinaryConfig } = require('./config/cloudinary');

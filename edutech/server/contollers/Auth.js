@@ -12,7 +12,7 @@ exports.sendOTP = async (req, res) => {
 
     const checkUserPresent = await User.findOne({email});
     if(checkUserPresent){
-        res.status(401).json({
+        return res.status(401).json({
             success: false,
             message: "User already exists"
         })
@@ -131,7 +131,7 @@ exports.signup = async (req, res) => {
             image: `https://api.dicebear.com/9.x/adventurer/svg?seed=${firstName}${lastName}`
         }
 
-        const user = (await User.create(userPayload)).populate("additionalDetails");
+        const user = await (await User.create(userPayload)).populate("additionalDetails");
 
         return res.status(200).json({
             success: true,
