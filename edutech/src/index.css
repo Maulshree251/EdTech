@@ -109,3 +109,31 @@ html, body {
 .review-marquee:hover {
   animation-play-state: paused;
 }
+
+/* Form styles for Settings page */
+.form-style {
+  border-radius: 0.5rem;
+  background-color: #2C333F;
+  padding: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #F1F2FF;
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.18);
+  outline: none;
+}
+
+.form-style::placeholder {
+  color: #999DAA;
+}
+
+.label-style {
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+  color: #F1F2FF;
+}
+
+.input-error-style {
+  font-size: 0.75rem;
+  color: #EF476F;
+  margin-top: 0.25rem;
+}

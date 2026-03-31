@@ -10,8 +10,8 @@ exports.ContactUs = async (req, res) => {
                 message: "please fill the required fields."
             });
         }
-        //fetch user id
-        const userId = req.user.id;
+        //fetch user id (optional - only available if user is authenticated)
+        const userId = req.user?.id || "Guest";
         //send confirmation email to user
         const mailResponse = mailSender(email, 
                                         "Confirmation email",
@@ -32,7 +32,7 @@ exports.ContactUs = async (req, res) => {
         if(!mailResponse || !adminEmailResponse ){
             return res.status(500).json({
                 success: false,
-                message: "email sent successfully"
+                message: "Failed to send email"
             })
         }
 

@@ -79,7 +79,7 @@ const {
 router.post('/auth/sendOTP', sendOTP);
 router.post('/auth/signup', signup);
 router.post('/auth/login', login);
-//router.post('/profile/changePassword', auth, changePassword);
+router.post('/auth/changepassword', auth, changePassword);
 
 // ==================== PROFILE ROUTES ====================
 router.put('/profile/updateProfile', auth, updateProfile);
