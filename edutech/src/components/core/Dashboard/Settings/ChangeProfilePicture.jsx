@@ -37,16 +37,16 @@ export default function ChangeProfilePicture() {
   }
 
   return (
-    <div className="flex items-center justify-between rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12 text-richblack-5">
-      <div className="flex items-center gap-x-4">
+    <div className="flex items-center rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6 px-4 md:p-8 md:px-12 text-richblack-5 w-full">
+      <div className="flex flex-col sm:flex-row items-center gap-y-4 gap-x-4 w-full md:w-auto">
         <img
           src={user?.image}
           alt={`profile-${user?.firstName}`}
           className="aspect-square w-[78px] rounded-full object-cover"
         />
-        <div className="space-y-2">
+        <div className="space-y-2 text-center md:text-left">
           <p>Change Profile Picture</p>
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-col min-[400px]:flex-row gap-3">
             <input
               type="file"
               ref={fileInputRef}

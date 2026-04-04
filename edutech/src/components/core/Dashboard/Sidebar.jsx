@@ -16,7 +16,7 @@ const Sidebar = () => {
 
     if (profileLoading || authLoading) {
         return (
-            <div className="grid h-[calc(100vh-3.5rem)] min-w-[222px] items-center border-r-[1px] border-r-richblack-700 bg-richblack-800">
+            <div className="hidden min-[330px]:grid h-[calc(100vh-3.5rem)] min-w-[70px] w-[70px] lg:min-w-[222px] lg:w-[222px] items-center border-r-[1px] border-r-richblack-700 bg-richblack-800 mt-14">
                 <div className="spinner"></div>
             </div>
         )
@@ -24,7 +24,7 @@ const Sidebar = () => {
 
   return (
     <div className="text-white">
-        <div className="flex h-[calc(100vh-3.5rem)] min-w-[222px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 py-10 mt-14">
+        <div className="hidden min-[330px]:flex h-[calc(100vh-3.5rem)] min-w-[70px] w-[70px] lg:min-w-[222px] lg:w-[222px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 py-10 mt-14">
             <div className="flex flex-col">
                 {sidebarLinks.map((link) => {
                     if (link.type && user?.accountType !== link.type) return null
@@ -54,11 +54,11 @@ const Sidebar = () => {
                         },
                         btn2Handler: () => setConfirmationModal(null),
                     })}
-                    className="px-8 py-2 text-sm font-medium text-richblack-300 hover:text-richblack-100 hover:bg-richblack-700 transition-all duration-200 mt-2"
+                    className="px-2 lg:px-8 py-2 text-sm font-medium text-richblack-300 hover:text-richblack-100 hover:bg-richblack-700 transition-all duration-200 mt-2 w-full"
                 >
-                    <div className="flex items-center gap-x-3">
-                        <VscSignOut className="text-lg" />
-                        <span>Logout</span>
+                    <div className="flex items-center justify-center lg:justify-start gap-x-2 lg:gap-x-3">
+                        <VscSignOut className="text-lg min-[330px]:text-xl lg:text-lg" />
+                        <span className="hidden lg:block">Logout</span>
                     </div>
                 </button>
             </div>

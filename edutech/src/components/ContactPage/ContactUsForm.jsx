@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { toast } from 'react-hot-toast'
 import countrycode from '../../data/countrycode.json'
 import { apiConnector } from '../../services/apiConnector'
 import { contactusEndpoint } from '../../services/apis'
@@ -38,7 +39,7 @@ const ContactUsForm = () => {
         }
       )
       console.log("Contact Us API Response: ", response)
-      alert("Message sent successfully")
+      toast.success("Message sent successfully")
       setFormData({
         firstname: '',
         lastname: '',
@@ -49,7 +50,7 @@ const ContactUsForm = () => {
       })
     } catch (error) {
       console.log("Error:", error.message)
-      alert("Something went wrong, please try again.")
+      toast.error("Something went wrong, please try again.")
     }
     setLoading(false)
   }

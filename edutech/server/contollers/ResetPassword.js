@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const mailSender = require("../utils/mailSender");
 
 exports.generateToken = async (req, res) => {

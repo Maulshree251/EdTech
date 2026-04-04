@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { toast } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/core/HomePage/Navbar';
 import { signUp, sendOTP } from '../services/operations/authAPI';
@@ -32,14 +33,14 @@ const VerifyEmail = () => {
     e.preventDefault();
     const otpValue = otp.join('');
     if (otpValue.length !== 6) {
-      alert('Please enter the complete 6-digit OTP');
+      toast.error('Please enter the complete 6-digit OTP');
       return;
     }
 
     // Get stored signup data
     const signupData = JSON.parse(localStorage.getItem('signupData'));
     if (!signupData) {
-      alert('Signup data not found. Please sign up again.');
+      toast.error('Signup data not found. Please sign up again.');
       navigate('/signup');
       return;
     }
@@ -52,14 +53,14 @@ const VerifyEmail = () => {
   const handleResendOTP = async () => {
     const signupData = JSON.parse(localStorage.getItem('signupData'));
     if (!signupData) {
-      alert('Signup data not found. Please sign up again.');
+      toast.error('Signup data not found. Please sign up again.');
       navigate('/signup');
       return;
     }
     setLoading(true);
     await sendOTP(signupData.email);
     setLoading(false);
-    alert('OTP resent successfully!');
+    toast.success('OTP resent successfully!');
   };
 
   return (

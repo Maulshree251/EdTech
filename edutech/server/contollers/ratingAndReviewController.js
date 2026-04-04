@@ -97,7 +97,7 @@ exports.getaverageRating = async (req, res) => {
 //get all rating
 exports.getAllRating = async (req, res) => {
     try{
-        const allRating = await RatingAndReview.find({}).sort({rating: "desc"}).populate({path: "user", select: "firstName, lastName, email, image"})
+        const allRating = await RatingAndReview.find({}).sort({rating: "desc"}).populate({path: "user", select: "firstName lastName email image"})
                                             .populate({path: "course", select: "courseName"}).exec();
 
     return res.status(200).json({

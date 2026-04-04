@@ -1,4 +1,5 @@
 import { apiConnector } from "../apiConnector"
+import { toast } from "react-hot-toast"
 import { settingsEndpoints } from "../apis"
 import { setUser } from "../../slices/profileSlice"
 import { logout } from "./authAPI"
@@ -27,13 +28,13 @@ export function updateDisplayPicture(token, formData) {
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-      
-      alert("Display Picture Updated Successfully")
+
+      toast.success("Display Picture Updated Successfully")
       dispatch(setUser(response.data.data))
       localStorage.setItem("user", JSON.stringify(response.data.data))
     } catch (error) {
       console.log("UPDATE_DISPLAY_PICTURE_API ERROR:", error)
-      alert(error.response?.data?.message || "Could Not Update Display Picture")
+      toast.error(error.response?.data?.message || "Could Not Update Display Picture")
     }
   }
 }
@@ -49,20 +50,20 @@ export function updateProfile(token, formData) {
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-      
-      const userImage = response.data.updatedUserDetails.image
-        ? response.data.updatedUserDetails.image
-        : `https://api.dicebear.com/9.x/adventurer/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`
-      
+
+      const userImage = response.data.updatedProfile.image
+        ? response.data.updatedProfile.image
+        : `https://api.dicebear.com/9.x/adventurer/svg?seed=${response.data.updatedProfile.firstName} ${response.data.updatedProfile.lastName}`
+
       dispatch(
-        setUser({ ...response.data.updatedUserDetails, image: userImage })
+        setUser({ ...response.data.updatedProfile, image: userImage })
       )
-      localStorage.setItem("user", JSON.stringify({ ...response.data.updatedUserDetails, image: userImage }))
-      
-      alert("Profile Updated Successfully")
+      localStorage.setItem("user", JSON.stringify({ ...response.data.updatedProfile, image: userImage }))
+
+      toast.success("Profile Updated Successfully")
     } catch (error) {
       console.log("UPDATE_PROFILE_API ERROR:", error)
-      alert(error.response?.data?.message || "Could Not Update Profile")
+      toast.error(error.response?.data?.message || "Could Not Update Profile")
     }
   }
 }
@@ -77,10 +78,10 @@ export async function changePassword(token, formData) {
     if (!response.data.success) {
       throw new Error(response.data.message)
     }
-    alert("Password Changed Successfully")
+    toast.success("Password Changed Successfully")
   } catch (error) {
     console.log("CHANGE_PASSWORD_API ERROR:", error)
-    alert(error.response?.data?.message || "Could Not Change Password")
+    toast.error(error.response?.data?.message || "Could Not Change Password")
   }
 }
 
@@ -95,11 +96,11 @@ export function deleteProfile(token, navigate) {
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-      alert("Profile Deleted Successfully")
+      toast.success("Profile Deleted Successfully")
       dispatch(logout(navigate))
     } catch (error) {
       console.log("DELETE_PROFILE_API ERROR:", error)
-      alert(error.response?.data?.message || "Could Not Delete Profile")
+      toast.error(error.response?.data?.message || "Could Not Delete Profile")
     }
   }
 }

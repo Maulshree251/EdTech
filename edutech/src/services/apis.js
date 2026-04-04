@@ -1,6 +1,13 @@
 // COURSE ENDPOINTS
 export const categories = {
   CATEGORIES_API: "/course/showAllCategories",
+  CATALOG_PAGE_API: "/course/getCatalogPageDetails",
+  CATEGORY_COURSES_API: "/course/getCategoryCourses",
+};
+
+export const instructorCourses = {
+  GET_INSTRUCTOR_COURSES_API: "/course/getInstructorCourses",
+  DELETE_COURSE_API: "/course/deleteCourse",
 };
 
 // CONTACT-US ENDPOINTS

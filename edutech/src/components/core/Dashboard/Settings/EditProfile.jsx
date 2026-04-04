@@ -18,7 +18,6 @@ export default function EditProfile() {
     gender: user?.additionalDetails?.gender || "Male",
     contactNumber: user?.additionalDetails?.contactNumber || "",
     about: user?.additionalDetails?.about || "",
-    profession: user?.additionalDetails?.profession || "",
   })
 
   const [loading, setLoading] = useState(false)
@@ -39,20 +38,21 @@ export default function EditProfile() {
       console.log("ERROR MESSAGE - ", error.message)
     }
     setLoading(false)
+    navigate('/dashboard/my-profile')
   }
 
   return (
     <form onSubmit={submitProfileForm}>
-      <div className="my-10 flex flex-col gap-y-6 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12 text-richblack-5">
+      <div className="my-10 flex flex-col gap-y-6 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6 px-4 md:p-8 md:px-12 text-richblack-5">
         <h2 className="text-lg font-semibold text-richblack-5">
           Profile Information
         </h2>
 
-        {/* Row 1: Display Name & Profession */}
+        {/* Row 1: First Name & Last Name */}
         <div className="flex flex-col gap-5 lg:flex-row">
           <div className="flex flex-col gap-2 lg:w-[48%]">
             <label htmlFor="firstName" className="text-richblack-50 label-style">
-              Display Name
+              First Name
             </label>
             <input
               type="text"
@@ -63,28 +63,20 @@ export default function EditProfile() {
               value={formData.firstName}
               onChange={handleOnChange}
             />
-            <p className="text-xs text-richblack-400">
-              Name entered above will be used for all issued certifies.
-            </p>
           </div>
           <div className="flex flex-col gap-2 lg:w-[48%]">
-            <label htmlFor="profession" className="text-richblack-50 label-style">
-              Profession
+            <label htmlFor="lastName" className="text-richblack-50 label-style">
+              Last Name
             </label>
-            <select
-              name="profession"
-              id="profession"
-              className="form-style pr-8"
-              value={formData.profession}
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              placeholder="Enter last name"
+              className="form-style"
+              value={formData.lastName}
               onChange={handleOnChange}
-            >
-              <option value="" disabled>Select Profession</option>
-              <option value="Developer">Developer</option>
-              <option value="Designer">Designer</option>
-              <option value="Student">Student</option>
-              <option value="Teacher">Teacher</option>
-              <option value="Other">Other</option>
-            </select>
+            />
           </div>
         </div>
 
@@ -107,9 +99,9 @@ export default function EditProfile() {
             <label className="text-richblack-50 label-style">
               Gender <sup className="text-pink-200">*</sup>
             </label>
-            <div className="flex items-center gap-x-6 rounded-lg bg-richblack-700 p-3 text-richblack-5 shadow-[0_1px_0_0] shadow-white/50">
+            <div className="flex flex-wrap items-center gap-y-3 gap-x-4 md:gap-x-6 rounded-lg bg-richblack-700 p-3 text-richblack-5 shadow-[0_1px_0_0] shadow-white/50">
               {genders.map((gen) => (
-                <label key={gen} className="flex items-center gap-x-2 cursor-pointer">
+                <label key={gen} className="flex items-center gap-x-2 cursor-pointer break-words">
                   <input
                     type="radio"
                     name="gender"

@@ -27,8 +27,11 @@ const LoginPage = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    dispatch(login(formData.email, formData.password, navigate));
-    setLoading(false);
+    try {
+      await dispatch(login(formData.email, formData.password, navigate));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

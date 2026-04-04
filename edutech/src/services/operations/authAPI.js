@@ -1,4 +1,5 @@
 import { apiConnector } from "../apiConnector";
+import { toast } from "react-hot-toast";
 import { setToken } from "../../slices/authSlice";
 import { setUser } from "../../slices/profileSlice";
 
@@ -29,7 +30,7 @@ export async function sendOTP(email, navigate) {
     }
   } catch (error) {
     console.log("SENDOTP API ERROR:", error);
-    alert(error.response?.data?.message || "Failed to send OTP");
+    toast.error(error.response?.data?.message || "Failed to send OTP");
   }
 }
 
@@ -46,7 +47,7 @@ export async function signUp(signupData, otp, navigate) {
       throw new Error(response.data.message);
     }
 
-    alert("Account created successfully!");
+    toast.success("Account created successfully!");
     // Clear stored signup data
     localStorage.removeItem("signupData");
     // Navigate to login page
@@ -55,7 +56,7 @@ export async function signUp(signupData, otp, navigate) {
     }
   } catch (error) {
     console.log("SIGNUP API ERROR:", error);
-    alert(error.response?.data?.message || "Failed to sign up");
+    toast.error(error.response?.data?.message || "Failed to sign up");
   }
 }
 
@@ -73,22 +74,29 @@ export function login(email, password, navigate) {
         throw new Error(response.data.message);
       }
 
+      const token = response.data.token || response.data.user?.token;
+      const userObj = response.data.user;
+
+      console.log("LOGIN - token:", token);
+      console.log("LOGIN - user:", userObj);
+      console.log("LOGIN - user image:", userObj?.image);
+
       // Store token and user in localStorage
-      localStorage.setItem("token", JSON.stringify(response.data.token || response.data.user?.token));
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("token", JSON.stringify(token));
+      localStorage.setItem("user", JSON.stringify(userObj));
 
       // Set Redux State
-      dispatch(setToken(response.data.token || response.data.user?.token));
-      dispatch(setUser(response.data.user));
+      dispatch(setToken(token));
+      dispatch(setUser(userObj));
 
-      alert("Logged in successfully!");
+      toast.success("Logged in successfully!");
       // Navigate to home page
       if (navigate) {
         navigate("/");
       }
     } catch (error) {
       console.log("LOGIN API ERROR:", error);
-      alert(error.response?.data?.message || "Failed to log in");
+      toast.error(error.response?.data?.message || "Failed to log in");
     }
   };
 }
@@ -100,7 +108,7 @@ export function logout(navigate) {
     dispatch(setUser(null));
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    alert("Logged out successfully");
+    toast.success("Logged out successfully");
     navigate("/");
   };
 }
@@ -119,13 +127,13 @@ export async function getPasswordResetToken(email, setEmailSent) {
       throw new Error(response.data.message);
     }
 
-    alert("Reset email sent!");
+    toast.success("Reset email sent!");
     if (setEmailSent) {
       setEmailSent(true);
     }
   } catch (error) {
     console.log("RESET PASSWORD TOKEN ERROR:", error);
-    alert(error.response?.data?.message || "Failed to send reset email");
+    toast.error(error.response?.data?.message || "Failed to send reset email");
   }
 }
 
@@ -143,12 +151,12 @@ export async function resetPassword(password, confirmPassword, token, navigate) 
       throw new Error(response.data.message);
     }
 
-    alert("Password reset successful!");
+    toast.success("Password reset successful!");
     if (navigate) {
       navigate("/reset-complete");
     }
   } catch (error) {
     console.log("RESET PASSWORD ERROR:", error);
-    alert(error.response?.data?.message || "Failed to reset password");
+    toast.error(error.response?.data?.message || "Failed to reset password");
   }
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/core/HomePage/Navbar';
 import signupImg from '../assets/Images/signup.webp';
@@ -30,8 +31,21 @@ const SignupPage = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+
+    const hasMinLength = formData.password.length >= 8;
+    const hasLower = /[a-z]/.test(formData.password);
+    const hasUpper = /[A-Z]/.test(formData.password);
+    const hasNumber = /\d/.test(formData.password);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(formData.password);
+    const isPasswordValid = hasMinLength && hasLower && hasUpper && hasNumber && hasSpecial;
+
+    if (!isPasswordValid) {
+      toast.error('Please fulfill all password requirements');
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match');
+      toast.error('Passwords do not match');
       return;
     }
     // Store signup data in localStorage for the verify-email page
@@ -232,6 +246,40 @@ const SignupPage = () => {
                   </svg>
                 </span>
               </label>
+            </div>
+
+            {/* Password Validation Requirements */}
+            <div className="grid grid-cols-2 gap-2 text-xs mt-1">
+              <div className={`flex items-center gap-1 ${/[a-z]/.test(formData.password) ? 'text-caribbeangreen-300' : 'text-richblack-400'}`}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 6L9 17L4 12"/>
+                </svg>
+                one lowercase character
+              </div>
+              <div className={`flex items-center gap-1 ${/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? 'text-caribbeangreen-300' : 'text-richblack-400'}`}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 6L9 17L4 12"/>
+                </svg>
+                one special character
+              </div>
+              <div className={`flex items-center gap-1 ${/[A-Z]/.test(formData.password) ? 'text-caribbeangreen-300' : 'text-richblack-400'}`}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 6L9 17L4 12"/>
+                </svg>
+                one uppercase character
+              </div>
+              <div className={`flex items-center gap-1 ${formData.password.length >= 8 ? 'text-caribbeangreen-300' : 'text-richblack-400'}`}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 6L9 17L4 12"/>
+                </svg>
+                8 character minimum
+              </div>
+              <div className={`flex items-center gap-1 ${/\d/.test(formData.password) ? 'text-caribbeangreen-300' : 'text-richblack-400'}`}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 6L9 17L4 12"/>
+                </svg>
+                one number
+              </div>
             </div>
 
             <button

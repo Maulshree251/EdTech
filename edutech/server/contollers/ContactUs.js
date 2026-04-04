@@ -13,7 +13,7 @@ exports.ContactUs = async (req, res) => {
         //fetch user id (optional - only available if user is authenticated)
         const userId = req.user?.id || "Guest";
         //send confirmation email to user
-        const mailResponse = mailSender(email, 
+        const mailResponse = await mailSender(email, 
                                         "Confirmation email",
                                         `Hello ${firstName} ${lastName}. Your data has been successfully recieved. Thank you for contacting us!!`
         )

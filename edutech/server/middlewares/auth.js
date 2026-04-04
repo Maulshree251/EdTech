@@ -8,8 +8,8 @@ exports.auth = async (req, res, next) => {
     try{
         console.log("auth middleware hit");
         //extract token
-        const token = req.cookies.token || 
-                      req.body.token || 
+        const token = req.cookies?.token || 
+                      req.body?.token || 
                       req.header("Authorization")?.replace("Bearer ", "");
 
         if(!token){
@@ -31,13 +31,13 @@ exports.auth = async (req, res, next) => {
         }
         console.log("token verfied")
 
+        next();
     } catch(err){
         return res.status(500).json({
             success: false,
             message: "Error verifying token"
         });
     }
-    next();
 };
 
 //isStudent

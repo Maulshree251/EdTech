@@ -1,6 +1,7 @@
 const Subsection = require("../models/Subsection");
 const Section = require("../models/Section");
 const { uploadImgToCloudinary } = require("../utils/imageUploader");
+const { uploadVideoToCloudinary } = require("../utils/videoUploader");
 
 //create a subsection
 exports.createSubsection = async (req, res) => {
@@ -17,8 +18,8 @@ exports.createSubsection = async (req, res) => {
             });
         }
 
-        //upload video to cloudinary and get secure url 
-        const uploadResult = await uploadImgToCloudinary(videoFile, process.env.FOLDER_NAME);
+        //upload video to cloudinary and get secure url
+        const uploadResult = await uploadVideoToCloudinary(videoFile, process.env.FOLDER_NAME);
         //create new subsection entry in db
         const newSubsection = await Subsection.create({
             title: title,
@@ -52,8 +53,7 @@ exports.updateSubsection = async (req, res) => {
     try{
         //fetch data from req body
         const {title, timeDuration, description} = req.body;
-        const videoFile = req.files.videoFile;
-        console.log(videoFile);
+        const videoFile = req.files?.videoFile;
         //fetch subsection id from req params
         const {subsectionId} = req.body;
         //validate
@@ -63,15 +63,21 @@ exports.updateSubsection = async (req, res) => {
                 message: "At least one field (title, time duration, description or video file) is required for update"
             });
         }
+
+        // Build update object with only provided fields
+        const updateData = {};
+        if(title) updateData.title = title;
+        if(timeDuration) updateData.timeDuration = timeDuration;
+        if(description) updateData.description = description;
+
         //if video file is present in req, upload to cloudinary and get secure url
-        const updatedVideo = await uploadImgToCloudinary(videoFile, process.env.FOLDER_NAME);
+        if(videoFile) {
+            const updatedVideo = await uploadVideoToCloudinary(videoFile, process.env.FOLDER_NAME);
+            updateData.videoURL = updatedVideo.secure_url;
+        }
+
         //update subsection entry in db with new data
-        const updatedSubsection = await Subsection.findByIdAndUpdate(subsectionId, {
-            title: title,
-            timeDuration: timeDuration,
-            description: description,
-            videoURL: updatedVideo.secure_url 
-        }, {new: true})
+        const updatedSubsection = await Subsection.findByIdAndUpdate(subsectionId, updateData, {new: true});
         
         //send response
         return res.status(200).json({
@@ -102,7 +108,7 @@ exports.deleteSubsection = async (req, res) => {
             )
         } catch(err){
             return res.status(500).json({
-                success: true,
+                success: false,
                 message: "subsection id not removed from section"
             })
         }

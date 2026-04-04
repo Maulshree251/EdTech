@@ -18,13 +18,13 @@ export default function DeleteAccount() {
     }
 
     return (
-        <div className=' mt-7 rounded-md border border-pink-700 bg-pink-900 p-8 px-5 md:px-12' >
-            <div className='flex gap-x-5 ' >
+        <div className=' mt-7 rounded-md border border-pink-700 bg-pink-900 p-6 px-4 md:p-8 md:px-12' >
+            <div className='flex flex-col min-[500px]:flex-row gap-y-4 gap-x-5 items-center min-[500px]:items-start' >
                 <div className='grid place-items-center aspect-square h-14 w-14  rounded-full bg-pink-700' >
                     <FiTrash2 className='text-3xl text-pink-200' />
                 </div>
 
-                <div className='flex flex-col space-y-2 ' >
+                <div className='flex flex-col space-y-2 text-center min-[500px]:text-left' >
                     <h2 className='text-lg font-semibold text-richblack-5 uppercase tracking-wider'>Delete Account</h2>
                     <div className='lg:w-full text-pink-25 space-y-1 lg:text-lg text-md tracking-wider' >
                         <p>Would you like to delete account?</p>

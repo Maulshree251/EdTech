@@ -21,13 +21,16 @@ const {
     getAllCourses,
     getCourseDetails,
     editCourse,
-    deleteCourse
+    deleteCourse,
+    getInstructorCourses
 } = require('../contollers/Course');
 
 const {
     createCategory,
     showAllCategories,
-    getCategoryPageDetails
+    getCategoryPageDetails,
+    getCatalogPageDetails,
+    getCategoryCourses
 } = require('../contollers/CategoryController');
 
 const {
@@ -91,6 +94,8 @@ router.put('/profile/updateDisplayPicture', auth, updateProfilePicture);
 router.post('/course/createCategory', auth, isAdmin, createCategory);
 router.get('/course/showAllCategories', showAllCategories);
 router.get('/course/getCategoryPageDetails/:categoryId', getCategoryPageDetails);
+router.get('/course/getCatalogPageDetails/:categoryName', getCatalogPageDetails);
+router.get('/course/getCategoryCourses/:categoryName', getCategoryCourses);
 
 router.post('/course/createTag', auth, isAdmin, createTag);
 router.get('/course/getAllTags', getAllTags);
@@ -101,6 +106,7 @@ router.get('/course/getAllCourses', getAllCourses);
 router.get('/course/getCourseDetails/:courseId', getCourseDetails);
 router.put('/course/editCourse', auth, isInstructor, editCourse);
 router.delete('/course/deleteCourse', auth, isInstructor, deleteCourse);
+router.get('/course/getInstructorCourses', auth, isInstructor, getInstructorCourses);
 //router.put('/course/editCourse',editCourse)
 
 // ==================== SECTION ROUTES ====================

@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import './App.css';
 import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
@@ -10,12 +11,16 @@ import ResetComplete from './pages/ResetComplete';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
+import Catalog from './pages/Catalog';
 import MyProfile from './components/core/Dashboard/MyProfile';
 import Settings from './components/core/Dashboard/Settings';
+import MyCourses from './components/core/Dashboard/MyCourses';
+import CourseBuilder from './components/core/Dashboard/CourseBuilder/CourseBuilder';
 
 function App() {
   return (
     <div>
+      <Toaster />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -26,10 +31,14 @@ function App() {
         <Route path="/reset-complete" element={<ResetComplete />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        
+        <Route path="/catalog/:categoryName" element={<Catalog />} />
+
         <Route element={<Dashboard />}>
           <Route path="/dashboard/my-profile" element={<MyProfile />} />
           <Route path="/dashboard/settings" element={<Settings />} />
+          <Route path="/dashboard/my-courses" element={<MyCourses />} />
+          <Route path="/dashboard/add-course" element={<CourseBuilder />} />
+          <Route path="/dashboard/" element={<MyProfile />} />
         </Route>
       </Routes>
     </div>
